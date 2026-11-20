@@ -1,320 +1,88 @@
-// Sample memories shown in the archive.
-const sampleMemories = [
-    {
-        id: "sample-1",
-        title: "The Quiet Streets",
-        place: "A familiar neighbourhood",
-        category: "Childhood",
-        story: "The streets where evening walks felt endless and every sunset seemed special.",
-        image: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=900",
-        date: "2026-01-01"
-    },
-    {
-        id: "sample-2",
-        title: "The Old Bookshop",
-        place: "A little bookshop",
-        category: "Childhood",
-        story: "A little shop filled with books, quiet corners and beautiful memories.",
-        image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=900",
-        date: "2026-01-02"
-    },
-    {
-        id: "sample-3",
-        title: "Somewhere by the Sea",
-        place: "The coast",
-        category: "Nature",
-        story: "The sound of waves and a thousand thoughts left behind.",
-        image: "https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=900",
-        date: "2026-01-03"
-    },
-    {
-        id: "sample-4",
-        title: "Mountain Morning",
-        place: "The mountains",
-        category: "Travel",
-        story: "A peaceful morning surrounded by mountains and fresh air.",
-        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900",
-        date: "2026-01-04"
-    },
-    {
-        id: "sample-5",
-        title: "An Evening Together",
-        place: "With friends",
-        category: "Friends",
-        story: "A simple evening with friends that became a special memory.",
-        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900",
-        date: "2026-01-05"
-    }
-];
+const MEMORY_KEY="beforeItDisappearsMemories";
+const FAV_KEY="beforeItDisappearsFavourites";
+const PROFILE_KEY="beforeItDisappearsProfile";
+const sampleMemories=[
+{id:"sample1",title:"The Quiet Streets",place:"A familiar neighbourhood",category:"Childhood",story:"The streets where evening walks felt endless and every sunset seemed special.",image:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=900",date:"2025-01-12"},
+{id:"sample2",title:"The Old Bookshop",place:"A little bookshop",category:"Childhood",story:"A little shop filled with books, quiet corners and beautiful memories.",image:"https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=900",date:"2025-03-04"},
+{id:"sample3",title:"Somewhere by the Sea",place:"The coast",category:"Nature",story:"The sound of waves and a thousand thoughts left behind.",image:"https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=900",date:"2025-06-18"},
+{id:"sample4",title:"Mountain Morning",place:"The mountains",category:"Travel",story:"A peaceful morning surrounded by mountains and fresh air.",image:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900",date:"2025-09-02"},
+{id:"sample5",title:"An Evening Together",place:"With friends",category:"Friends",story:"A simple evening with friends that became a special memory.",image:"https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900",date:"2025-11-21"}];
+function getMemories(){return JSON.parse(localStorage.getItem(MEMORY_KEY)||"[]")}
+function saveMemories(list){localStorage.setItem(MEMORY_KEY,JSON.stringify(list))}
+function getFavourites(){return JSON.parse(localStorage.getItem(FAV_KEY)||"[]")}
+function saveFavourites(list){localStorage.setItem(FAV_KEY,JSON.stringify(list))}
+function allMemories(){return sampleMemories.concat(getMemories())}
+const menuBtn=document.getElementById("menuBtn");
+if(menuBtn)menuBtn.onclick=()=>document.getElementById("navLinks").classList.toggle("open");
 
-const MEMORY_KEY = "memories";
-const FAVOURITE_KEY = "favourites";
-
-function getSavedMemories() {
-    return JSON.parse(localStorage.getItem(MEMORY_KEY) || "[]");
+// Share form and photo preview.
+const form=document.getElementById("memoryForm");
+if(form){
+ const photo=document.getElementById("photo"),preview=document.getElementById("preview");
+ photo.onchange=()=>{
+  const file=photo.files[0];if(!file){preview.hidden=true;return}
+  if(!file.type.startsWith("image/")||file.size>1024*1024){alert("Please choose an image smaller than 1 MB.");photo.value="";preview.hidden=true;return}
+  const reader=new FileReader();reader.onload=()=>{preview.src=reader.result;preview.hidden=false};reader.readAsDataURL(file);
+ };
+ form.onsubmit=e=>{
+  e.preventDefault();
+  const save=image=>{
+   const list=getMemories();list.unshift({id:"user-"+Date.now(),title:document.getElementById("title").value.trim(),place:document.getElementById("place").value.trim(),category:document.getElementById("category").value,story:document.getElementById("story").value.trim(),image,date:document.getElementById("memoryDate").value||new Date().toISOString().slice(0,10)});
+   try{saveMemories(list);document.getElementById("formMessage").textContent="Your memory has been saved!";form.reset();preview.hidden=true}
+   catch(err){document.getElementById("formMessage").textContent="Storage is full. Try a smaller photograph."}
+  };
+  const file=photo.files[0];if(file){const reader=new FileReader();reader.onload=()=>save(reader.result);reader.readAsDataURL(file)}else save("");
+ };
 }
 
-function saveMemories(memories) {
-    localStorage.setItem(MEMORY_KEY, JSON.stringify(memories));
+// Reusable memory card creation.
+function makeCard(memory,showFavourite=true){
+ const card=document.createElement("article");card.className="memory-card";
+ const img=document.createElement("img");img.src=memory.image||"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=900";img.alt="Memory photograph";
+ const body=document.createElement("div");body.className="card-body";
+ const h=document.createElement("h3");h.textContent=memory.title;
+ const meta=document.createElement("p");meta.textContent=memory.category+" · "+memory.place;
+ const story=document.createElement("p");story.textContent=memory.story.length>100?memory.story.slice(0,100)+"…":memory.story;
+ const actions=document.createElement("div");actions.className="actions";
+ const favs=getFavourites();
+ if(showFavourite){const fav=document.createElement("button");fav.className="small-btn";fav.textContent=favs.includes(memory.id)?"♥ Saved":"♡ Favourite";fav.onclick=()=>{let f=getFavourites();f=f.includes(memory.id)?f.filter(x=>x!==memory.id):f.concat(memory.id);saveFavourites(f);location.reload()};actions.append(fav)}
+ if(memory.id.startsWith("user-")){const del=document.createElement("button");del.className="small-btn";del.textContent="Delete";del.onclick=()=>{if(confirm("Delete this memory?")){saveMemories(getMemories().filter(x=>x.id!==memory.id));saveFavourites(getFavourites().filter(x=>x!==memory.id));location.reload()}};actions.append(del)}
+ body.append(h,meta,story,actions);card.append(img,body);return card;
 }
 
-function getFavourites() {
-    return JSON.parse(localStorage.getItem(FAVOURITE_KEY) || "[]");
+// Memory archive: search, category and sort.
+const gallery=document.getElementById("memoryGallery");
+if(gallery){
+ const search=document.getElementById("searchInput"),category=document.getElementById("categoryFilter"),sort=document.getElementById("sortOrder");
+ function render(){
+  let list=allMemories(),term=search.value.toLowerCase();
+  list=list.filter(m=>(m.title+" "+m.place+" "+m.story).toLowerCase().includes(term)&&(category.value==="All"||m.category===category.value));
+  list.sort((a,b)=>sort.value==="newest"?new Date(b.date)-new Date(a.date):new Date(a.date)-new Date(b.date));
+  gallery.innerHTML="";if(!list.length){gallery.textContent="No memories found.";return}
+  list.forEach(m=>gallery.append(makeCard(m)));
+ }
+ [search,category,sort].forEach(el=>el.addEventListener(el===search?"input":"change",render));render();
 }
 
-function saveFavourites(favourites) {
-    localStorage.setItem(FAVOURITE_KEY, JSON.stringify(favourites));
+// Favourite page.
+const favGallery=document.getElementById("favouriteGallery");
+if(favGallery){const list=allMemories().filter(m=>getFavourites().includes(m.id));if(!list.length)favGallery.textContent="No favourites yet. Visit Memories and select Favourite on a card.";else list.forEach(m=>favGallery.append(makeCard(m)))}
+
+// Timeline page.
+const timeline=document.getElementById("timelineList");
+if(timeline){const list=allMemories().sort((a,b)=>new Date(b.date)-new Date(a.date));list.forEach(m=>{const item=document.createElement("article");item.className="timeline-item";const time=document.createElement("time");time.textContent=new Date(m.date).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});const h=document.createElement("h3");h.textContent=m.title;const p=document.createElement("p");p.textContent=m.place+" · "+m.category;const story=document.createElement("p");story.textContent=m.story;item.append(time,h,p,story);timeline.append(item)})}
+
+// Dashboard counts and category summary.
+if(document.getElementById("dashTotal")){
+ const list=allMemories(),favs=getFavourites();document.getElementById("dashTotal").textContent=list.length;document.getElementById("dashPhotos").textContent=list.filter(m=>m.image).length;document.getElementById("dashFavourites").textContent=favs.length;
+ const categories=["Travel","Childhood","Friends","Nature","Family","Other"],stats=document.getElementById("categoryStats");
+ categories.forEach(cat=>{const n=list.filter(m=>m.category===cat).length,row=document.createElement("div");row.className="bar-row";const label=document.createElement("div");label.className="bar-label";label.textContent=cat+" ("+n+")";const bar=document.createElement("div");bar.className="bar";const fill=document.createElement("span");fill.style.width=(n/list.length*100||0)+"%";bar.append(fill);row.append(label,bar);stats.append(row)});
+ const recent=document.getElementById("recentMemories");list.slice(0,4).forEach(m=>{const p=document.createElement("p");p.textContent=m.title+" — "+m.place;recent.append(p)});
 }
 
-// HOME PAGE: photo preview and memory form.
-const memoryForm = document.getElementById("memoryForm");
+// Home summary.
+if(document.getElementById("homeCount")){document.getElementById("homeCount").textContent=allMemories().length;document.getElementById("homeFav").textContent=getFavourites().length}
 
-if (memoryForm) {
-    const photoInput = document.getElementById("photo");
-    const photoPreview = document.getElementById("photoPreview");
-
-    document.getElementById("memoryCount").textContent = getSavedMemories().length;
-
-    photoInput.addEventListener("change", function () {
-        const file = photoInput.files[0];
-
-        if (!file) {
-            photoPreview.hidden = true;
-            return;
-        }
-
-        if (file.size > 1024 * 1024) {
-            alert("Please choose an image smaller than 1 MB.");
-            photoInput.value = "";
-            photoPreview.hidden = true;
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function () {
-            photoPreview.src = reader.result;
-            photoPreview.hidden = false;
-        };
-        reader.readAsDataURL(file);
-    });
-
-    memoryForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const file = photoInput.files[0];
-
-        function addMemory(photoData) {
-            const newMemory = {
-                id: "user-" + Date.now(),
-                title: document.getElementById("title").value.trim(),
-                place: document.getElementById("place").value.trim(),
-                category: document.getElementById("category").value,
-                story: document.getElementById("story").value.trim(),
-                image: photoData,
-                date: new Date().toISOString()
-            };
-
-            const memories = getSavedMemories();
-            memories.push(newMemory);
-
-            try {
-                saveMemories(memories);
-                document.getElementById("formMessage").textContent =
-                    "Your memory has been saved in this browser.";
-                memoryForm.reset();
-                photoPreview.hidden = true;
-                document.getElementById("memoryCount").textContent = memories.length;
-            } catch (error) {
-                memories.pop();
-                document.getElementById("formMessage").textContent =
-                    "Storage is full. Try a smaller photo.";
-            }
-        }
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function () {
-                addMemory(reader.result);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            addMemory("");
-        }
-    });
-}
-
-// MEMORIES PAGE: search, category filter, favourites and memory cards.
-const gallery = document.getElementById("memoryGallery");
-
-if (gallery) {
-    const searchInput = document.getElementById("searchInput");
-    const categoryFilter = document.getElementById("filterCategory");
-    const sortOrder = document.getElementById("sortOrder");
-    const favouritesOnly = document.getElementById("favouritesOnly");
-
-    function showMemories() {
-        let memories = sampleMemories.concat(getSavedMemories());
-        const searchText = searchInput.value.toLowerCase();
-        const selectedCategory = categoryFilter.value;
-        const favourites = getFavourites();
-
-        memories = memories.filter(function (memory) {
-            const matchesSearch =
-                memory.title.toLowerCase().includes(searchText) ||
-                memory.place.toLowerCase().includes(searchText) ||
-                memory.story.toLowerCase().includes(searchText);
-
-            const matchesCategory =
-                selectedCategory === "All" || memory.category === selectedCategory;
-
-            const matchesFavourite =
-                !favouritesOnly.checked || favourites.includes(memory.id);
-
-            return matchesSearch && matchesCategory && matchesFavourite;
-        });
-
-        memories.sort(function (a, b) {
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
-            return sortOrder.value === "newest" ? dateB - dateA : dateA - dateB;
-        });
-
-        gallery.innerHTML = "";
-
-        if (memories.length === 0) {
-            gallery.textContent = "No memories found.";
-            return;
-        }
-
-        memories.forEach(function (memory) {
-            const card = document.createElement("article");
-            card.className = "memory-card";
-
-            const image = document.createElement("img");
-            image.src = memory.image || "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=900";
-            image.alt = "Photograph for " + memory.title;
-
-            const content = document.createElement("div");
-            content.className = "card-content";
-
-            const title = document.createElement("h3");
-            title.textContent = memory.title;
-
-            const category = document.createElement("p");
-            category.textContent = memory.category + " · " + memory.place;
-
-            const story = document.createElement("p");
-            story.textContent = memory.story.length > 100
-                ? memory.story.substring(0, 100) + "..."
-                : memory.story;
-
-            const actions = document.createElement("div");
-            actions.className = "card-actions";
-
-            const readButton = document.createElement("button");
-            readButton.className = "small-button";
-            readButton.textContent = "Read more";
-            readButton.addEventListener("click", function () {
-                openDetails(memory);
-            });
-
-            const favouriteButton = document.createElement("button");
-            favouriteButton.className = "small-button";
-            favouriteButton.textContent = favourites.includes(memory.id)
-                ? "♥ Saved"
-                : "♡ Favourite";
-            favouriteButton.addEventListener("click", function () {
-                toggleFavourite(memory.id);
-            });
-
-            actions.append(readButton, favouriteButton);
-
-            if (memory.id.startsWith("user-")) {
-                const deleteButton = document.createElement("button");
-                deleteButton.className = "small-button";
-                deleteButton.textContent = "Delete";
-                deleteButton.addEventListener("click", function () {
-                    deleteMemory(memory.id);
-                });
-                actions.appendChild(deleteButton);
-            }
-
-            content.append(title, category, story, actions);
-            card.append(image, content);
-            gallery.appendChild(card);
-        });
-    }
-
-    function toggleFavourite(id) {
-        let favourites = getFavourites();
-
-        if (favourites.includes(id)) {
-            favourites = favourites.filter(function (item) {
-                return item !== id;
-            });
-        } else {
-            favourites.push(id);
-        }
-
-        saveFavourites(favourites);
-        showMemories();
-    }
-
-    function deleteMemory(id) {
-        if (!confirm("Do you want to delete this memory?")) {
-            return;
-        }
-
-        const memories = getSavedMemories().filter(function (memory) {
-            return memory.id !== id;
-        });
-
-        const favourites = getFavourites().filter(function (item) {
-            return item !== id;
-        });
-
-        saveMemories(memories);
-        saveFavourites(favourites);
-        showMemories();
-    }
-
-    function openDetails(memory) {
-        document.getElementById("detailTitle").textContent = memory.title;
-        document.getElementById("detailPlace").textContent =
-            memory.category + " · " + memory.place;
-        document.getElementById("detailStory").textContent = memory.story;
-
-        const detailImage = document.getElementById("detailImage");
-        if (memory.image) {
-            detailImage.src = memory.image;
-            detailImage.hidden = false;
-        } else {
-            detailImage.hidden = true;
-        }
-
-        document.getElementById("memoryDetails").hidden = false;
-        document.getElementById("memoryDetails").scrollIntoView({ behavior: "smooth" });
-    }
-
-    searchInput.addEventListener("input", showMemories);
-    categoryFilter.addEventListener("change", showMemories);
-    sortOrder.addEventListener("change", showMemories);
-    favouritesOnly.addEventListener("change", showMemories);
-
-    document.getElementById("closeDetails").addEventListener("click", function () {
-        document.getElementById("memoryDetails").hidden = true;
-    });
-
-    document.getElementById("exportButton").addEventListener("click", function () {
-        const data = JSON.stringify(getSavedMemories(), null, 2);
-        const file = new Blob([data], { type: "application/json" });
-        const url = URL.createObjectURL(file);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "my-memories.json";
-        link.click();
-        URL.revokeObjectURL(url);
-    });
-
-    showMemories();
-}
+// Local demo profile.
+const profileForm=document.getElementById("profileForm");
+if(profileForm){const profile=JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}");document.getElementById("displayName").value=profile.name||"";document.getElementById("bio").value=profile.bio||"";profileForm.onsubmit=e=>{e.preventDefault();localStorage.setItem(PROFILE_KEY,JSON.stringify({name:document.getElementById("displayName").value,bio:document.getElementById("bio").value}));document.getElementById("profileMessage").textContent="Your profile details have been saved in this browser."}}

@@ -1,65 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share a Memory | Before It Disappears</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav class="navbar">
-        <a class="logo" href="index.html">Before It <span>Disappears.</span></a>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="memories.html">Memories</a>
-            <a href="share.html">Share</a>
-            <a href="about.html">About</a>
-        </div>
-    </nav>
-    <header class="page-hero">
-        <p class="eyebrow">ADD YOUR STORY</p>
-        <h1>Every memory<br>starts with a moment.</h1>
-        <p>Share a place, a photograph or a small story that matters to you.</p>
-    </header>
-        <section class="section share-section" id="share">
-        <p class="eyebrow">ADD TO THE ARCHIVE</p>
-        <h2>Share a memory</h2>
-        <p class="muted">Add a title, place, story and an optional photograph.</p>
-
-        <form id="memoryForm" class="memory-form">
-            <label for="title">Memory title</label>
-            <input id="title" type="text" placeholder="Example: Summer evenings" required>
-
-            <label for="place">Place or location</label>
-            <input id="place" type="text" placeholder="Where did it happen?" required>
-
-            <label for="category">Category</label>
-            <select id="category" required>
-                <option value="">Choose a category</option>
-                <option>Travel</option>
-                <option>Childhood</option>
-                <option>Friends</option>
-                <option>Nature</option>
-                <option>Family</option>
-                <option>Other</option>
-            </select>
-
-            <label for="story">Your story</label>
-            <textarea id="story" rows="5" placeholder="Write a little about this memory..." required></textarea>
-
-            <label for="photo">Add a photograph (optional, max 1 MB)</label>
-            <input id="photo" type="file" accept="image/*">
-            <img id="photoPreview" class="photo-preview" alt="Selected photo preview" hidden>
-
-            <button class="button" type="submit">Save Memory</button>
-            <p id="formMessage" class="message" aria-live="polite"></p>
-        </form>
-    </section>
-
-    <footer>
-        <p>BEFORE IT DISAPPEARS © 2026</p>
-        <p>Preserving moments, one story at a time.</p>
-    </footer>
-    <script src="script.js"></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share a Memory | Before It Disappears</title><link rel="stylesheet" href="style.css"></head><body>
+<nav class="nav">
+<a class="brand" href="index.html">Before It <span>Disappears.</span></a>
+<button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+<div class="navlinks" id="navLinks">
+<a href="index.html">Home</a><a href="memories.html">Memories</a><a href="share.html">Share</a>
+<a href="places.html">Places</a><a href="timeline.html">Timeline</a><a href="dashboard.html">Dashboard</a>
+<a href="favourites.html">Favourites</a><a href="profile.html">Profile</a><a href="about.html">About</a><a href="faq.html">FAQ</a>
+</div></nav>
+<header class="pagehead"><p class="eyebrow">ADD YOUR STORY</p><h1>Every memory starts somewhere.</h1><p>Write about a moment and keep it in your archive.</p></header>
+<main class="section"><div class="form-wrap"><p class="eyebrow">YOUR STORY BELONGS HERE</p><h2>Preserve a memory</h2>
+<form id="memoryForm">
+<label for="title">Memory title</label><input id="title" maxlength="60" placeholder="Example: Summer evenings" required>
+<label for="place">Place name</label><input id="place" maxlength="70" placeholder="Where did it happen?" required>
+<label for="category">Category</label><select id="category" required><option value="">Choose category</option><option>Travel</option><option>Childhood</option><option>Friends</option><option>Nature</option><option>Family</option><option>Other</option></select>
+<label for="memoryDate">Date of memory</label><input id="memoryDate" type="date">
+<label for="story">Your story</label><textarea id="story" rows="6" maxlength="1200" placeholder="Write your memory..." required></textarea>
+<label for="photo">Photograph (optional, up to 1 MB)</label><input id="photo" type="file" accept="image/*"><img id="preview" class="preview" alt="Photo preview" hidden>
+<button class="btn" type="submit">Save this memory ♥</button><p id="formMessage" class="message" aria-live="polite"></p>
+</form></div></main><footer><strong>BEFORE IT DISAPPEARS © 2026</strong><p>A little archive for the moments we carry with us.</p><small>Frontend demonstration project · Data is stored in this browser</small></footer><script src="script.js"></script>
+</body></html>

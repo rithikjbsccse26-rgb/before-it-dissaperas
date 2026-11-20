@@ -1,27 +1,30 @@
-# Before It Disappears
+# Before It Disappears — Frontend Major Project
 
-A simple digital memory archive made with HTML, CSS and JavaScript.
+A beginner-friendly frontend website for preserving stories and memories connected to meaningful places.
 
-## Project pages and files
+## Pages
+1. Home — project introduction and collection summary
+2. Memories — browse, search and sort the archive
+3. Share — submit a memory and optional photograph
+4. Places — explore sample place themes
+5. Timeline — view memories in date order
+6. Dashboard — collection counts and category summary
+7. Favourites — view saved favourite memories
+8. Profile — save a local display name and short bio
+9. About — project overview and technologies
+10. FAQ — common questions and help
 
-- `index.html` — home page
-- `memories.html` — browse, search, filter, favourite and export memories
-- `share.html` — submit a memory with an optional photograph
-- `about.html` — project purpose and how it works
-- `style.css` — shared design and responsive layout
-- `script.js` — form, photo preview, search, filters, favourites, details, delete and export functions
+## Technologies
+- HTML for page structure
+- CSS for styling and responsive layout
+- JavaScript for interactions
+- Browser Local Storage for this demonstration's data
 
-## How to run
+## Run the project
+1. Extract this folder.
+2. Open it in Visual Studio Code.
+3. Open `index.html` in a browser, or use Live Server.
+4. Use the navigation bar to visit each page.
 
-1. Extract the ZIP folder.
-2. Open the folder in Visual Studio Code.
-3. Open `index.html` in a browser, or use the Live Server extension.
-4. Use the navigation links to visit all four pages.
-
-## Storage note
-
-This prototype uses browser Local Storage. Memories saved on one browser are not automatically shared with other people or devices. Clearing browser data may remove saved memories. Sample photographs use online image links and need an internet connection.
-
-## GitHub
-
-Upload all six project files plus this README to the root of your GitHub repository.
+## Important project limitation
+This is a frontend-only prototype. Local Storage keeps information in the current browser only. It does not provide real user accounts, cloud backup or shared data between different devices. The profile page is a local display profile, not secure authentication. Sample photographs are online image links and need an internet connection.

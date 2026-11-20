@@ -1,75 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memories | Before It Disappears</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav class="navbar">
-        <a class="logo" href="index.html">Before It <span>Disappears.</span></a>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="memories.html">Memories</a>
-            <a href="share.html">Share</a>
-            <a href="about.html">About</a>
-        </div>
-    </nav>
-
-    <header class="page-hero">
-        <p class="eyebrow">THE MEMORY COLLECTION</p>
-        <h1>Stories that stay.</h1>
-        <p>Explore the moments and places people want to remember.</p>
-    </header>
-
-    <main class="section">
-        <div class="archive-heading">
-            <div>
-                <p class="eyebrow">THE ARCHIVE</p>
-                <h2>Remembered places</h2>
-            </div>
-            <a class="button button-outline" href="index.html#share">Add a memory</a>
-        </div>
-
-        <div class="filters">
-            <input id="searchInput" type="search" placeholder="Search title, place or story...">
-            <select id="filterCategory">
-                <option value="All">All categories</option>
-                <option>Travel</option>
-                <option>Childhood</option>
-                <option>Friends</option>
-                <option>Nature</option>
-                <option>Family</option>
-                <option>Other</option>
-            </select>
-            <select id="sortOrder">
-                <option value="newest">Newest first</option>
-                <option value="oldest">Oldest first</option>
-            </select>
-            <label class="favourite-filter"><input id="favouritesOnly" type="checkbox"> Favourites only</label>
-        </div>
-
-        <div id="memoryGallery" class="gallery"></div>
-
-        <section id="memoryDetails" class="details" hidden>
-            <button id="closeDetails" class="close-button" type="button">Close ×</button>
-            <h2 id="detailTitle"></h2>
-            <p id="detailPlace" class="eyebrow"></p>
-            <img id="detailImage" alt="Memory photograph" hidden>
-            <p id="detailStory"></p>
-        </section>
-
-        <div class="export-row">
-            <button id="exportButton" class="button button-outline" type="button">Export my memories (JSON)</button>
-        </div>
-    </main>
-
-    <footer>
-        <p>BEFORE IT DISAPPEARS © 2026</p>
-        <p>Preserving moments, one story at a time.</p>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memories | Before It Disappears</title><link rel="stylesheet" href="style.css"></head><body>
+<nav class="nav">
+<a class="brand" href="index.html">Before It <span>Disappears.</span></a>
+<button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+<div class="navlinks" id="navLinks">
+<a href="index.html">Home</a><a href="memories.html">Memories</a><a href="share.html">Share</a>
+<a href="places.html">Places</a><a href="timeline.html">Timeline</a><a href="dashboard.html">Dashboard</a>
+<a href="favourites.html">Favourites</a><a href="profile.html">Profile</a><a href="about.html">About</a><a href="faq.html">FAQ</a>
+</div></nav>
+<header class="pagehead"><p class="eyebrow">THE MEMORY COLLECTION</p><h1>Stories that stay.</h1><p>Browse the memories in your local archive.</p></header>
+<main class="section"><div class="section-title"><div><p class="eyebrow">THE ARCHIVE</p><h2>Remembered moments</h2></div><a class="btn ghost" href="share.html">Add memory</a></div>
+<div class="filters"><input id="searchInput" placeholder="Search title, place or story..."><select id="categoryFilter"><option>All</option><option>Travel</option><option>Childhood</option><option>Friends</option><option>Nature</option><option>Family</option><option>Other</option></select><select id="sortOrder"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></div>
+<div id="memoryGallery" class="cards"></div><div id="detailPanel" class="detail" hidden><button id="closeDetail" class="small-btn">Close ×</button><h2 id="detailTitle"></h2><p id="detailMeta" class="eyebrow"></p><img id="detailPhoto" alt="Memory photograph"><p id="detailStory"></p></div>
+</main><footer><strong>BEFORE IT DISAPPEARS © 2026</strong><p>A little archive for the moments we carry with us.</p><small>Frontend demonstration project · Data is stored in this browser</small></footer><script src="script.js"></script>
+</body></html>

@@ -1,67 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Before It Disappears</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav class="navbar">
-        <a class="logo" href="index.html">Before It <span>Disappears.</span></a>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="memories.html">Memories</a>
-            <a href="share.html">Share</a>
-            <a href="about.html">About</a>
-        </div>
-    </nav>
-    <header class="page-hero">
-        <p class="eyebrow">ABOUT THE PROJECT</p>
-        <h1>Because little moments<br>mean everything.</h1>
-        <p>A simple digital space for keeping stories, photographs and meaningful places.</p>
-    </header>
-
-    <main class="section">
-        <p class="eyebrow">OUR IDEA</p>
-        <h2>What is Before It Disappears?</h2>
-        <p class="muted">Before It Disappears is a digital memory archive. It lets people write about meaningful moments, add a location and optionally attach a photograph. The archive is designed to make memories easy to save and revisit.</p>
-
-        <div class="about-grid">
-            <article class="about-card">
-                <h3>01. Preserve</h3>
-                <p>Write down a moment before its details fade away.</p>
-            </article>
-            <article class="about-card">
-                <h3>02. Explore</h3>
-                <p>Browse the archive, search stories and filter by category.</p>
-            </article>
-            <article class="about-card">
-                <h3>03. Remember</h3>
-                <p>Save favourite memories and revisit their stories.</p>
-            </article>
-        </div>
-
-        <p class="eyebrow">HOW IT WORKS</p>
-        <h2>Simple to use</h2>
-        <ol class="steps-list">
-            <li>Open the Share page.</li>
-            <li>Enter a memory title, place, category and story.</li>
-            <li>Add a photograph if you want.</li>
-            <li>Save it and find it on the Memories page.</li>
-        </ol>
-
-        <p class="eyebrow">TECHNOLOGY</p>
-        <h2>Made with simple web tools</h2>
-        <p class="muted">This prototype uses HTML to structure the pages, CSS to style them and JavaScript to handle memory submissions and archive features. Memories are saved in the browser using Local Storage.</p>
-
-        <p class="note">Prototype note: saved memories are stored in the current browser. They are not automatically shared between different users or devices.</p>
-        <a class="button" href="share.html">Share your memory</a>
-    </main>
-
-    <footer>
-        <p>BEFORE IT DISAPPEARS © 2026</p>
-        <p>Preserving moments, one story at a time.</p>
-    </footer>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Before It Disappears</title><link rel="stylesheet" href="style.css"></head><body>
+<nav class="nav">
+<a class="brand" href="index.html">Before It <span>Disappears.</span></a>
+<button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+<div class="navlinks" id="navLinks">
+<a href="index.html">Home</a><a href="memories.html">Memories</a><a href="share.html">Share</a>
+<a href="places.html">Places</a><a href="timeline.html">Timeline</a><a href="dashboard.html">Dashboard</a>
+<a href="favourites.html">Favourites</a><a href="profile.html">Profile</a><a href="about.html">About</a><a href="faq.html">FAQ</a>
+</div></nav>
+<header class="pagehead"><p class="eyebrow">ABOUT THE PROJECT</p><h1>Because little moments matter.</h1><p>The idea and technology behind Before It Disappears.</p></header>
+<main class="section"><h2>Project overview</h2><p class="muted">Before It Disappears is a frontend memory archive. It gives visitors a simple way to write about meaningful moments, connect them with places and optionally attach photographs.</p>
+<div class="tiles"><article class="tile"><h3>01 · Preserve</h3><p>Record a memory before its details fade.</p></article><article class="tile"><h3>02 · Explore</h3><p>Search, filter and revisit stories.</p></article><article class="tile"><h3>03 · Remember</h3><p>Collect favourite moments in one place.</p></article></div>
+<h2 class="top-gap">Technologies used</h2><ul class="plain-list"><li><b>HTML:</b> creates the structure of each webpage.</li><li><b>CSS:</b> controls colours, layout and responsive design.</li><li><b>JavaScript:</b> handles form submissions and interactive features.</li><li><b>Local Storage:</b> stores data in the current browser.</li></ul>
+<div class="note">Project limitation: this frontend version does not use a server or shared database. Memories and profile details stay in the browser where they were entered.</div></main><footer><strong>BEFORE IT DISAPPEARS © 2026</strong><p>A little archive for the moments we carry with us.</p><small>Frontend demonstration project · Data is stored in this browser</small></footer>
+</body></html>
