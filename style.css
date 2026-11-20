@@ -350,3 +350,47 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin: 35px 0 55px;
+}
+
+.about-card {
+    padding: 22px;
+    border: 1px solid #343b34;
+    background: #1d241f;
+}
+
+.about-card h3 {
+    color: #c5a879;
+    font-family: Georgia, serif;
+    font-weight: normal;
+}
+
+.about-card p,
+.steps-list,
+.note {
+    color: #aaa99b;
+}
+
+.steps-list li {
+    margin: 10px 0;
+    padding-left: 5px;
+}
+
+.note {
+    margin-top: 30px;
+    padding: 15px;
+    border-left: 3px solid #c5a879;
+    background: #1d241f;
+}
+
+@media (max-width: 700px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+}
