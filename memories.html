@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memories | Before It Disappears</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=DM+Sans&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #141915;
+            color: #eee8dc;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        nav {
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #343b34;
+        }
+
+        nav h2 {
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+        }
+
+        nav span {
+            color: #c5a879;
+        }
+
+        nav a {
+            color: #c5a879;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        header {
+            padding: 80px 8%;
+            background:
+            linear-gradient(#10171099, #101710cc),
+            url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1500") center/cover;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 50px;
+        }
+
+        header p {
+            color: #ccc;
+        }
+
+        section {
+            padding: 60px 8%;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: normal;
+        }
+
+        .controls {
+            margin: 25px 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        input, select {
+            padding: 13px;
+            background: #252e27;
+            color: white;
+            border: 1px solid #444b40;
+        }
+
+        input {
+            flex: 1;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            background: #1d241f;
+            border: 1px solid #343b34;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card div {
+            padding: 18px;
+        }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 23px;
+        }
+
+        .card p {
+            color: #aaa99b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        button {
+            background: #a4ad91;
+            color: #172019;
+            border: none;
+            padding: 10px 14px;
+            cursor: pointer;
+            margin: 5px 3px 0 0;
+        }
+
+        button:hover {
+            background: #c5a879;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #aaa99b;
+            border-top: 1px solid #343b34;
+        }
+
+        #details {
+            display: none;
+            background: #252e27;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid #c5a879;
+        }
+
+        #details img {
+            width: 200px;
+            display: block;
+            margin: 15px 0;
+        }
+
+        @media(max-width:700px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            header h1 {
+                font-size: 38px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h2>Before It <span>Disappears.</span></h2>
+
+    <div>
+        <a href="index.html">Home</a>
+        <a href="memories.html">Memories</a>
+        <a href="index.html#share">Share</a>
+    </div>
+</nav>
+
+<header>
+    <p>THE MEMORY COLLECTION</p>
+    <h1>Stories That Stay.</h1>
+    <p>Every photograph holds a moment. Every place has a story.</p>
+</header>
+
+<section>
+
+    <h2>Remembered Places</h2>
+    <p>Explore the memories shared by everyone.</p>
+
+    <div class="controls">
+
+        <input type="text" id="search"
+        placeholder="Search memories...">
+
+        <select id="category">
+            <option value="All">All Categories</option>
+            <option value="Travel">Travel</option>
+            <option value="Childhood">Childhood</option>
+            <option value="Friends">Friends</option>
+            <option value="Nature">Nature</option>
+            <option value="Other">Other</option>
+        </select>
+
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+
+    <div id="details">
+        <h2 id="detailTitle"></h2>
+        <img id="detailImage" alt="Memory photograph">
+        <p id="detailStory"></p>
+        <button onclick="closeDetails()">Close</button>
+    </div>
+
+</section>
+
+<footer>
+    Made with ♥ for the places we carry with us.
+    <br><br>
+    BEFORE IT DISAPPEARS © 2026
+</footer>
+
+<script>
+
+// Sample memories
+
+let samples = [
+    {
+        id: "1",
+        place: "The Quiet Streets",
+        category: "Childhood",
+        story: "The streets where evening walks felt endless and every sunset seemed special.",
+        image: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=900"
+    },
+    {
+        id: "2",
+        place: "The Old Bookshop",
+        category: "Childhood",
+        story: "A little shop filled with books and beautiful memories.",
+        image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=900"
+    },
+    {
+        id: "3",
+        place: "Somewhere by the Sea",
+        category: "Nature",
+        story: "The sound of waves and a thousand thoughts left behind.",
+        image: "https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=900"
+    },
+    {
+        id: "4",
+        place: "Mountain View",
+        category: "Travel",
+        story: "A beautiful morning surrounded by mountains.",
+        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900"
+    },
+    {
+        id: "5",
+        place: "An Evening Together",
+        category: "Friends",
+        story: "A simple evening with friends that became a special memory.",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900"
+    }
+];
+
+// Load saved memories
+
+let memories = JSON.parse(localStorage.getItem("memories")) || [];
+
+let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
+// Display memories
+
+function showMemories() {
+
+    let gallery = document.getElementById("gallery");
+
+    let search = document.getElementById("search").value.toLowerCase();
+
+    let category = document.getElementById("category").value;
+
+    let allMemories = [...samples, ...memories];
+
+    gallery.innerHTML = "";
+
+    allMemories.forEach(memory => {
+
+        if (
+            memory.place.toLowerCase().includes(search) &&
+            (category === "All" || memory.category === category)
+        ) {
+
+            let card = document.createElement("div");
+
+            card.className = "card";
+
+            let image = memory.image ||
+            "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=900";
+
+            card.innerHTML = `
+                <img src="${image}">
+
+                <div>
+                    <h3>${escapeHTML(memory.place)}</h3>
+
+                    <p>${escapeHTML(memory.category || "Other")}</p>
+
+                    <p>${escapeHTML(memory.story)}</p>
+
+                    <button onclick="readMemory('${memory.id}')">
+                        Read More
+                    </button>
+
+                    <button onclick="favourite('${memory.id}')">
+                        ${favourites.includes(memory.id) ? "♥ Saved" : "♡ Favourite"}
+                    </button>
+
+                    ${memory.id.startsWith("user-") ? `
+                        <button onclick="deleteMemory('${memory.id}')">
+                            Delete
+                        </button>
+                    ` : ""}
+                </div>
+            `;
+
+            gallery.appendChild(card);
+        }
+
+    });
+
+    if (gallery.innerHTML === "") {
+        gallery.innerHTML = "<p>No memories found.</p>";
+    }
+}
+
+// Prevent HTML injection in displayed text
+
+function escapeHTML(text) {
+    return String(text).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+// Search
+
+document.getElementById("search").oninput = showMemories;
+
+// Category filter
+
+document.getElementById("category").onchange = showMemories;
+
+// Favourite memories
+
+function favourite(id) {
+
+    if (favourites.includes(id)) {
+        favourites = favourites.filter(item => item !== id);
+    } else {
+        favourites.push(id);
+    }
+
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+
+    showMemories();
+}
+
+// Read more
+
+function readMemory(id) {
+
+    let memory = [...samples, ...memories].find(m => m.id === id);
+
+    if (!memory) return;
+
+    document.getElementById("detailTitle").textContent = memory.place;
+
+    document.getElementById("detailStory").textContent = memory.story;
+
+    document.getElementById("detailImage").src =
+        memory.image ||
+        "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=900";
+
+    document.getElementById("details").style.display = "block";
+}
+
+// Close details
+
+function closeDetails() {
+    document.getElementById("details").style.display = "none";
+}
+
+// Delete user memories
+
+function deleteMemory(id) {
+
+    if (confirm("Do you want to delete this memory?")) {
+
+        memories = memories.filter(m => m.id !== id);
+
+        favourites = favourites.filter(item => item !== id);
+
+        localStorage.setItem("memories", JSON.stringify(memories));
+
+        localStorage.setItem("favourites", JSON.stringify(favourites));
+
+        showMemories();
+    }
+}
+
+// Show memories when page opens
+
+showMemories();
+
+</script>
+
+</body>
+</html>
